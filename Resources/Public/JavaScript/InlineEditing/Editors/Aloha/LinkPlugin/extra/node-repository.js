@@ -30,18 +30,28 @@ define(
 		},
 
 		getQueryRequestData: function(searchTerm) {
-			return {
-				searchTerm: searchTerm,
-				workspaceName: this.workspaceName,
-				dimensions: this.dimensions,
-				contextNode: this.siteNode
-			};
+			var queryRequestData = this.getCurrentContextData();
+
+			return $.extend(queryRequestData,{
+				searchTerm: searchTerm
+			});
 		},
 
 		getObjectQueryRequestData: function() {
+			var queryRequestData = this.getCurrentContextData();
+
 			return {
-				workspaceName: this.workspaceName,
-				dimensions: this.dimensions
+				workspaceName: queryRequestData.workspaceName,
+				dimensions: queryRequestData.dimensions
+			};
+		},
+
+		getCurrentContextData: function() {
+			var $metaInformation = $('#neos-document-metadata');
+			return {
+				workspaceName: $metaInformation.data('neos-context-workspace-name'),
+				dimensions: $metaInformation.data('neos-context-dimensions'),
+				contextNode: $metaInformation.data('neos-site-node-context-path')
 			};
 		},
 
