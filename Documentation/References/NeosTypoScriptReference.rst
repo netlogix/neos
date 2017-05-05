@@ -17,6 +17,7 @@ TYPO3.TypoScript:Array
 Render multiple nested definitions and concatenate the results.
 
 :[key]: (string) A nested definition (simple value, expression or object) that evaluates to a string
+:[key].@ignoreProperties: (array) A list of properties to ignore from being "rendered" during evaluation
 :[key].@position: (string/integer) Define the ordering of the nested definition
 
 The order in which nested definitions are evaluated are specified using their
@@ -499,7 +500,7 @@ Render nested content from a ``ContentCollection`` node. Individual nodes are re
 :ref:`TYPO3_Neos__ContentCase` object.
 
 :nodePath: (string, **required**) The relative node path of the ``ContentCollection`` (e.g. ``'main'``)
-:@context.contentCollectionNode: (Node) The content collection node, resolved from ``nodePath`` by default
+:@context.node: (Node) The content collection node, resolved from ``nodePath`` by default
 :tagName: (string) Tag name for the wrapper element
 :attributes: (:ref:`TYPO3_TypoScript__Attributes`) Tag attributes for the wrapper element
 
@@ -786,7 +787,9 @@ ImageUri
 Get a URI to a (thumbnail) image for an asset.
 
 :asset: (Asset) An asset object (``Image``, ``ImageInterface`` or other ``AssetInterface``)
+:width: (integer) Desired width of the image
 :maximumWidth: (integer) Desired maximum height of the image
+:height: (integer) Desired height of the image
 :maximumHeight: (integer) Desired maximum width of the image
 :allowCropping: (boolean) Whether the image should be cropped if the given sizes would hurt the aspect ratio, defaults to ``FALSE``
 :allowUpScaling: (boolean) Whether the resulting image size might exceed the size of the original image, defaults to ``FALSE``
@@ -795,8 +798,8 @@ Example::
 
 	logoUri = TYPO3.Neos:ImageUri {
 		asset = ${q(node).property('image')}
-		maximumWidth = 100
-		maximumHeight = 100
+		width = 100
+		height = 100
 		allowCropping = TRUE
 		allowUpScaling = TRUE
 	}
